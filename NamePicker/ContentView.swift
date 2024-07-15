@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var nameToAdd = ""
     @State private var pickedName = ""
     @State private var shouldRemovePickedName = false
+    @State private var savedList: [String] = []
     
     var body: some View {
         VStack {
@@ -40,7 +41,7 @@ struct ContentView: View {
             TextField("Add Name", text: $nameToAdd)
                 .autocorrectionDisabled()
                 .onSubmit {
-                    if !nameToAdd.isEmpty {
+                    if !nameToAdd.isEmpty && !names.contains(nameToAdd) {
                         names.append(nameToAdd)
                         nameToAdd = ""
                     }
@@ -72,6 +73,15 @@ struct ContentView: View {
             }
             .buttonStyle(.borderedProminent)
             .font(.title2)
+            
+            HStack {
+                Button("Save List") {
+                    savedList = names
+                }
+                Button("Load List") {
+                    names = savedList
+                }
+            }
             
             
         }
